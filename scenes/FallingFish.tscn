@@ -1,28 +1,27 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://assets/kenney_platformerpack/Spritesheets/spritesheet_enemies.png" type="Texture" id=1]
 [ext_resource path="res://scenes/FallingFish.gd" type="Script" id=2]
-[ext_resource path="res://scenes/TriggerArea.tscn" type="PackedScene" id=3]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 38.91
 height = 32.18
 
 [node name="RigidBody2D" type="RigidBody2D"]
+contacts_reported = 1
+contact_monitor = true
 script = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 5, 5 )
+position = Vector2( 2, 4 )
+scale = Vector2( 0.6, 0.6 )
 shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
+scale = Vector2( 0.6, 0.6 )
 texture = ExtResource( 1 )
 hframes = 8
 vframes = 16
 frame = 19
-
-[node name="TriggerArea" parent="." instance=ExtResource( 3 )]
-position = Vector2( 5, 5 )
-scale = Vector2( 0.6, 0.6 )
 
 [connection signal="body_entered" from="." to="." method="_on_RigidBody2D_body_entered"]

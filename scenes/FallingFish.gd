@@ -3,8 +3,10 @@ extends RigidBody2D
 export var sceneName: String = "LoseScreen"
 
 func _on_RigidBody2D_body_entered(body):
-	print('player')
+	print(body.get_name())
 	if body.get_name() == "Player":
 		get_tree().change_scene(str("res://scenes/" + sceneName + ".tscn"))
 	else:
-		body.queue_free()
+		get_node("Sprite").frame_coords.y = 3
+		yield(get_tree().create_timer(3), "timeout")
+		self.queue_free()
