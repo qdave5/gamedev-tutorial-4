@@ -4,7 +4,7 @@ const UP = Vector2(0, -1)
 
 export var speed: int = 400
 export var GRAVITY: int = 1200
-export var jump_speed: int = -400
+export var jump_speed: int = -00
 
 var velocity: Vector2 = Vector2()
 
@@ -19,13 +19,13 @@ func get_input():
 		velocity.x -= speed
 
 
-func _physics_process(_delta):
+func _physics_process(delta):
 	velocity.y += delta * GRAVITY
 	get_input()
 	velocity = move_and_slide(velocity, UP)
 
 
-func _process(_delta):
+func _process(delta):
 	if velocity.y != 0:
 		$Animator.play("Jump")
 	elif velocity.x != 0:
