@@ -1,0 +1,50 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://scenes/Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/CustomParallaxBackground.tscn" type="PackedScene" id=2]
+[ext_resource path="res://assets/kenney_platformerpack/PNG/Backgrounds/colored_desert.png" type="Texture" id=3]
+[ext_resource path="res://scenes/Platform.tres" type="TileSet" id=4]
+[ext_resource path="res://scenes/TriggerArea.tscn" type="PackedScene" id=5]
+[ext_resource path="res://assets/Familiar Looking Rocket.png" type="Texture" id=6]
+[ext_resource path="res://assets/kenney_platformerpack/PNG/Tiles/water.png" type="Texture" id=7]
+
+[node name="Level2" type="Node2D"]
+
+[node name="Player" parent="." instance=ExtResource( 1 )]
+position = Vector2( 7, 184 )
+speed = 800
+
+[node name="ParallaxBackground" parent="." instance=ExtResource( 2 )]
+offset = Vector2( -2000, -400 )
+transform = Transform2D( 1, 0, 0, 1, -2000, -400 )
+rectSizeX = 32768
+texture = ExtResource( 3 )
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource( 4 )
+cell_size = Vector2( 128, 128 )
+format = 1
+tile_data = PoolIntArray( 65532, 5, 2, 15, 5, 0, 16, 5, 0, 17, 5, 0, 18, 5, 0, 19, 5, 0, 131068, 5, 2, 65549, 5, 65536, 65564, 5, 0, 65565, 5, 0, 196604, 5, 2, 131078, 5, 0, 131079, 5, 0, 131080, 5, 0, 131087, 5, 65536, 131092, 5, 0, 131093, 5, 0, 131094, 5, 0, 131095, 5, 0, 131096, 5, 0, 131097, 5, 0, 131098, 5, 0, 131102, 5, 0, 131103, 5, 0, 262140, 5, 2, 196613, 5, 0, 196621, 5, 65536, 196640, 5, 0, 196641, 5, 0, 327677, 5, 0, 327678, 5, 0, 327679, 5, 0, 262144, 5, 0, 262145, 5, 0, 262146, 5, 0, 262147, 5, 0, 262159, 5, 65536, 327689, 5, 0, 327690, 5, 0, 327691, 5, 0, 327692, 5, 0, 327693, 5, 0 )
+
+[node name="Sprite2" type="Sprite" parent="."]
+position = Vector2( -1201, -318 )
+texture = ExtResource( 6 )
+offset = Vector2( 5904, 829 )
+
+[node name="WinArea" parent="Sprite2" instance=ExtResource( 5 )]
+position = Vector2( 5901, 828 )
+scale = Vector2( 1.244, 2.392 )
+sceneName = "WinScreen"
+
+[node name="TextureRect" type="TextureRect" parent="."]
+margin_left = -2913.0
+margin_top = 856.0
+margin_right = 7956.0
+margin_bottom = 1458.0
+texture = ExtResource( 7 )
+stretch_mode = 2
+
+[node name="DeadArea3" parent="TextureRect" instance=ExtResource( 5 )]
+position = Vector2( 2142, 103 )
+scale = Vector2( 100, 1 )
+sceneName = "LoseScreen"

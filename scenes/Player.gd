@@ -4,7 +4,7 @@ const UP = Vector2(0, -1)
 
 export var speed: int = 400
 export var GRAVITY: int = 1200
-export var jump_speed: int = -00
+export var jump_speed: int = -600
 
 var velocity: Vector2 = Vector2()
 

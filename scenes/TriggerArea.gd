@@ -1,6 +1,6 @@
 extends Area2D
 
-export var sceneName: String = "Level1"
+export var sceneName : String = "Level1"
 
 func _on_TriggerArea_body_entered(body):
 	if body.get_name() == "Player":
