@@ -22,3 +22,7 @@ mono_crash.*.json
 .venv/
 env/
 venv/
+
+
+## vscode 
+.vscode

@@ -34,6 +34,8 @@ Step-by-step yang perlu dilakukan untuk membuat tile set baru adalah:
 
 ## Repeatable Background
 
+### Implementasi
+
 reference: [How to Make an Infinite Scrolling Background](https://forum.godotengine.org/t/how-to-make-an-infinite-scrolling-background/24114/3)
 
 Pada `Level1`, ditambahkan sebuah background `colored_land.png` pada `TextureRect`. Supaya background tersebut dapat diperpanjang secara horizontal dan berulang, pada atribut `TextureRect` set `Stretch Mode` menjadi **"Tile"**. Hasil pengulangan dapat terlihat ketika ukuran `TextureRect` tersebut diperpanjang, terutama ketika diperpanjang kebawah akan menampilkan kembali bagian langit dari background `colored_land.png`. Implementasi ini juga digunakan pada gambar laut (yang digunakan sebagai area kalah dari pemain).
@@ -46,7 +48,7 @@ ParallaxBackground
 - - TextureRect
 ```
 
-### Improvement
+### Improve Reusability
 
 `ParallaxBackground` yang telah dibuat sebelumnya dapat dibuat menjadi _scene_ sehingga dapat di*reuse*. Supaya _texture_ dari _scene_ tersebut dapat diubah sesuai dengan level yang ada, ditambahkan _script_ pada `ParallaxBackground`.
 
@@ -69,6 +71,21 @@ func _ready():
 ```
 
 _By default_, `ParallaxBackground` akan menampilkan `colored_land`. Dengan ditambahkan `export`, `ParallaxBackground` dapat diupdate atribut _texture_ tersebut yang akan diupdate ketika menjalankan _level_ tersebut. Kemudian untuk mengubah panjang dari `TextureRect`, disediakan rectSizeX untuk menyesuaikan panjang dari _background_ sesuai dengan panjang _level_ yang dibuat.
+
+### Changeable Background
+
+Pada `Level3`, ingin melakukan percobaan untuk mengubah _texture_ pada `ParallaxBackground`. Untuk melakukannya perlu ditambahkan `Area2D` dan `CollisionShape` yang kemudian dihubungkan fungsi `_body_entered()` untuk mengubah _texture_ ketika `Player` melaluinya.
+
+```
+onready var texture_rect : TextureRect = get_parent().get_node("ParallaxBackground/ParallaxLayer/TextureRect")
+
+func _on_ChangeBackgroundArea_body_entered(body):
+	if body.get_name() == "Player":
+		texture_rect.texture = load("res://assets/kenney_platformerpack/PNG/Backgrounds/colored_shroom.png")
+```
+
+Pada _node_ `Area2D` yang dinamakan `ChangeBackgroundArea`, dipanggil `TextureRect` secara _hardcode_ yang dimaksud dari *parent*nya.
+Kemudian _textre_ pada `TextureRect` diupdate dengan _path texture_ yang baru.
 
 ---
 
@@ -166,3 +183,5 @@ func _process(delta):
 	else:
 		isFall = true
 ```
+
+### PopupFish

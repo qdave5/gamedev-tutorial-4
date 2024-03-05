@@ -1,0 +1,68 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://scenes/CustomParallaxBackground.tscn" type="PackedScene" id=1]
+[ext_resource path="res://assets/kenney_platformerpack/PNG/Backgrounds/blue_land.png" type="Texture" id=2]
+[ext_resource path="res://Scenes/Player.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/TriggerArea.tscn" type="PackedScene" id=4]
+[ext_resource path="res://assets/Familiar Looking Rocket.png" type="Texture" id=5]
+[ext_resource path="res://assets/kenney_platformerpack/PNG/Tiles/water.png" type="Texture" id=6]
+[ext_resource path="res://scenes/Platform.tres" type="TileSet" id=7]
+[ext_resource path="res://scenes/ChangeBackgroundArea.gd" type="Script" id=8]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 18, 1622.5 )
+
+[node name="Level3" type="Node2D"]
+
+[node name="ParallaxBackground" parent="." instance=ExtResource( 1 )]
+offset = Vector2( -1200, -800 )
+transform = Transform2D( 1, 0, 0, 1, -1200, -800 )
+rectSizeX = 16384
+texture = ExtResource( 2 )
+rectScaleX = 2.5
+rectScaleY = 2.5
+
+[node name="Player" parent="." instance=ExtResource( 3 )]
+position = Vector2( 144, 52 )
+GRAVITY = 800
+jump_speed = -800
+zoomX = 2
+zoomY = 2
+
+[node name="Sprite2" type="Sprite" parent="."]
+position = Vector2( 7399, 383 )
+texture = ExtResource( 5 )
+
+[node name="WinArea" parent="Sprite2" instance=ExtResource( 4 )]
+position = Vector2( 2, -2 )
+scale = Vector2( 1.244, 2.392 )
+sceneName = "WinScreen"
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource( 7 )
+cell_size = Vector2( 128, 128 )
+format = 1
+tile_data = PoolIntArray( -327669, 4, 0, -327668, 4, 0, -327667, 4, 0, -327666, 4, 0, -327665, 4, 0, -327664, 4, 0, -327663, 4, 0, -262124, 4, 0, -262120, 4, 0, -196599, 4, 0, -196581, 4, 0, -196559, 4, 0, -65538, 4, 0, -65537, 4, 0, -131058, 4, 0, -131054, 4, 0, -131050, 4, 0, -131042, 4, 0, -131034, 4, 0, -2, 4, 0, -1, 4, 0, -65525, 4, 0, -65504, 4, 0, -65491, 4, 0, -65484, 4, 0, 65534, 4, 0, 65535, 4, 0, 7, 4, 0, 20, 4, 0, 26, 4, 0, 35, 4, 0, 42, 4, 0, 131070, 4, 0, 131071, 4, 0, 65546, 4, 0, 65552, 4, 0, 65559, 4, 0, 65565, 4, 0, 65575, 4, 0, 65586, 4, 0, 196606, 4, 0, 196607, 4, 0, 131077, 4, 0, 131085, 4, 0, 131105, 4, 0, 131118, 4, 0, 131127, 4, 0, 262142, 4, 0, 262143, 4, 0, 196608, 4, 0, 196609, 4, 0, 196610, 4, 0, 196611, 4, 0, 196615, 4, 0, 196618, 4, 0, 196628, 4, 0, 196633, 4, 0, 196636, 4, 0, 196646, 4, 0, 262161, 4, 0, 262178, 4, 0, 262194, 4, 0, 262197, 4, 0, 327694, 4, 0, 327703, 4, 0, 327707, 4, 0, 327710, 4, 0, 327721, 4, 0, 393224, 4, 0, 393225, 4, 0, 393226, 4, 0, 393227, 4, 0, 393228, 4, 0, 393249, 4, 0, 393253, 4, 0, 393261, 4, 0, 458777, 4, 0, 458778, 4, 0, 458779, 4, 0, 458780, 4, 0, 458781, 4, 0 )
+
+[node name="TextureRect" type="TextureRect" parent="."]
+margin_left = -2617.0
+margin_top = 1038.0
+margin_right = 8252.0
+margin_bottom = 1640.0
+texture = ExtResource( 6 )
+stretch_mode = 2
+
+[node name="DeadArea3" parent="TextureRect" instance=ExtResource( 4 )]
+position = Vector2( 2042, 89 )
+scale = Vector2( 100, 1 )
+sceneName = "LoseScreen"
+
+[node name="ChangeBackgroundArea" type="Area2D" parent="."]
+position = Vector2( 4149, 15 )
+script = ExtResource( 8 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ChangeBackgroundArea"]
+position = Vector2( -28, 0 )
+shape = SubResource( 1 )
+
+[connection signal="body_entered" from="ChangeBackgroundArea" to="ChangeBackgroundArea" method="_on_ChangeBackgroundArea_body_entered"]

@@ -1,7 +1,7 @@
 extends Node2D
 
 export (PackedScene) var obstacle
-export (float) var intervalSpawn = 1
+export (float) var intervalSpawn = 1.0
 
 export (int) var minXSpawnRange = -1000
 export (int) var maxXSpawnRange = 1000

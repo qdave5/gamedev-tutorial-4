@@ -6,8 +6,13 @@ export var speed: int = 400
 export var GRAVITY: int = 1200
 export var jump_speed: int = -600
 
+export var zoomX: int = 1
+export var zoomY: int = 1
+
 var velocity: Vector2 = Vector2()
 
+func _ready():
+	get_node("Camera2D").zoom = Vector2(zoomX, zoomY)
 
 func get_input():
 	velocity.x = 0
@@ -25,7 +30,7 @@ func _physics_process(delta):
 	velocity = move_and_slide(velocity, UP)
 
 
-func _process(delta):
+func _process(_delta):
 	if velocity.y != 0:
 		$Animator.play("Jump")
 	elif velocity.x != 0:

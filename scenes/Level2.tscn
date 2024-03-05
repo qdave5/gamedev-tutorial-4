@@ -36,7 +36,7 @@ offset = Vector2( 5904, 829 )
 [node name="WinArea" parent="Sprite2" instance=ExtResource( 5 )]
 position = Vector2( 5901, 828 )
 scale = Vector2( 1.244, 2.392 )
-sceneName = "WinScreen"
+sceneName = "Level3"
 
 [node name="TextureRect" type="TextureRect" parent="."]
 margin_left = -2913.0

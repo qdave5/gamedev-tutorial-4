@@ -7,7 +7,7 @@ export var linearVelocityY : int = -5
 
 var isFall : bool = false
 
-func _process(delta):
+func _process(_delta):
 	update_animation()
 	if not isFall and position.y > maxHeight:
 		linear_velocity.y += linearVelocityY
