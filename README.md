@@ -12,9 +12,9 @@ Godot Version : 3.5
 
 Sebagai bagian dari latihan mandiri, kamu diminta untuk praktik membuat level baru yang berbeda dari level pertama. Kebutuhan minimum yang harus diimplementasikan pada level baru:
 
--   Level menggunakan tile map yang berbeda dari level pertama.
--   Terdapat spawner rintangan di level baru yang membuat objek berbeda dari ikan.
--   Memiliki rintangan berupa jurang dan objek yang berjatuhan secara periodik.
+-   [x] Level menggunakan tile map yang berbeda dari level pertama.
+-   [x] Terdapat spawner rintangan di level baru yang membuat objek berbeda dari ikan.
+-   [x] Memiliki rintangan berupa jurang dan objek yang berjatuhan secara periodik.
 
 Silakan berkreasi lebih lanjut untuk membuat level baru kamu makin menarik! Jangan lupa untuk menjelaskan proses pengerjaan level baru ini di dalam sebuah dokumen teks README.md. Cantumkan juga referensi-referensi yang digunakan sebagai acuan ketika menjelaskan proses implementasi.
 
@@ -74,7 +74,9 @@ _By default_, `ParallaxBackground` akan menampilkan `colored_land`. Dengan ditam
 
 ## Implementasi new mob (obstacle)
 
-### Update implementasi FallingFish
+### FallingFish
+
+#### Update Pengembangan FallingFish
 
 Sebelumnya dilab, terjadi suatu masalah dimana _node_ `FallingFish` yang dibuat tidak mentrigger _signal_ `_body_entered()` yang dimana bermaksud untuk memberikan sinyal ketika `Player` menyentuh `FallingFish`. Solusi yang ditemukan oleh **Ivan Rabbani C.** dari group Discord GameDev adalah dengan memberikan mengatur atribut `Contacts Report` menjadi > 0 dan `Contacts Monitor` menjadi `true`. Setelah dilakukan proses tersebut, _node_ `RigidBody2D` yang dimiliki oleh `FallingFish` akhirnya dapat mengirimkan sinyal ketika terjadi _collision_ dengan objek lain.
 
@@ -100,6 +102,8 @@ func _on_FallArea_body_entered(body):
         self.queue_free()
 ```
 
+#### Change Texture upon Death
+
 Solusi diatas dapat dikembangkan lebih lanjut dengan mengubah _texture_ dari `FallingFish` menjadi versi _death_-nya dan memberikan waktu sebelum dihilangkan.
 
 ```
@@ -114,3 +118,51 @@ func _on_RigidBody2D_body_entered(body):
 ```
 
 `frame_coord` untuk _texture_ fish versi normal adalah (3,2), sedangkan versi *death*nya adalah (3,3).
+
+### JumpingFish
+
+#### Implementation
+
+Implementasi yang dilakukan kurang lebih sama dengan `FallingFish` untuk pergerakan jatuh dan *lose condition*nya. Berbedaan terletak pada `func _process()` untuk pergerakan lompat keatas dengan mengurangi nilai `linear_velocity.y`, yang merupakan kecepatan pergerakan pada _node_ `RigidBody2D`. Kemudian dilakukan juga `update_animation()` untuk mengubah _frame_ dari `JumpingFish` supaya yang tadinya menghadap keatas, jadi menghadap kebawah ketika sedang jatuh.
+
+```
+export var maxHeight : int = -300
+
+var isFall : bool = false
+
+func _process(delta):
+	update_animation()
+	if not isFall and position.y > maxHeight:
+		linear_velocity.y -= 10
+	else:
+		isFall = true
+
+func update_animation():
+	if linear_velocity.y <= 0:
+		get_node("Sprite").frame_coords.y = 4
+	else:
+		get_node("Sprite").frame_coords.y = 2
+```
+
+#### Make `JumpingFish` Pass Throught Platform
+
+Untuk membuat _node_ `JumpingFish` melewati _platform_ yang telah dibuat, pada atribut `collision_layer` dan `collision_mask` yang dimiliki oleh _node_ `CollisionObject2D`, update nilai layer dan mask menjadi 2 saja. Berdasarkan [dokumentasi](https://docs.godotengine.org/en/stable/tutorials/physics/physics_introduction.html#collision-layers-and-masks), `collision_layer` mendeskripsikan layer objek itu berada, sedangkan `collision_mask` mendeskripsikan layer apa yang akan dideteksi oleh objek tersebut. Implementasi ini dapat membuat _node_ `JumpingFish` mampu melewati platform karena berada di layer 1.
+
+Namun implementasi ini masih belum cukup karena _node_ `JumpingFish` saat ini masih tidak dapat mendeteksi `Player` dikarenakan player masih berada di layer satu. Untuk itu, _node_ `Player` juga perlu di update nilai `collision_layer` menjadi 1 dan 2, sehingga `JumpingFish` dapat mendeteksi `Player` dan `Player` masih dapat _collide_ dengan platform.
+
+#### queue_free upon back to position.y == 0
+
+Terakhir, supaya game tidak menjadi ngelag karena _node_ `JumpingFish` tidak akan menghilang (`queue_free()`). _Conditional_ menghilang dari _node_ `FallingFish` terjadi ketika _node_ `FallingFish` menyentuh objek lain selain `Player`, dimana tidak akan pernah terjadi pada _node_ `JumpingFish`.
+
+Untuk mengatasinya, ditambahkan _if condition_ untuk `queue_free()` ketika `position.y` dari `JumpingFish` kembali ke titik awalnya (atau kurang dari titik awalnya).
+
+```
+func _process(delta):
+	update_animation()
+	if not isFall and position.y > maxHeight:
+		linear_velocity.y -= 10
+	elif isFall and position.y >= 0:
+		self.queue_free()
+	else:
+		isFall = true
+```

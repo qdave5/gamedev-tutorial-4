@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://scenes/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/CustomParallaxBackground.tscn" type="PackedScene" id=2]
@@ -7,6 +7,8 @@
 [ext_resource path="res://scenes/TriggerArea.tscn" type="PackedScene" id=5]
 [ext_resource path="res://assets/Familiar Looking Rocket.png" type="Texture" id=6]
 [ext_resource path="res://assets/kenney_platformerpack/PNG/Tiles/water.png" type="Texture" id=7]
+[ext_resource path="res://scenes/JumpingFish.tscn" type="PackedScene" id=8]
+[ext_resource path="res://scenes/Spawner.gd" type="Script" id=9]
 
 [node name="Level2" type="Node2D"]
 
@@ -48,3 +50,14 @@ stretch_mode = 2
 position = Vector2( 2142, 103 )
 scale = Vector2( 100, 1 )
 sceneName = "LoseScreen"
+
+[node name="JumpingFish" parent="." instance=ExtResource( 8 )]
+position = Vector2( 7, 959 )
+
+[node name="Spawner" type="Node2D" parent="."]
+position = Vector2( 2226, 959 )
+script = ExtResource( 9 )
+obstacle = ExtResource( 8 )
+intervalSpawn = 0.3
+minXSpawnRange = -5000
+maxXSpawnRange = 5000

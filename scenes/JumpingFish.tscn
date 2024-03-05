@@ -1,13 +1,15 @@
 [gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://assets/kenney_platformerpack/Spritesheets/spritesheet_enemies.png" type="Texture" id=1]
-[ext_resource path="res://scenes/FallingFish.gd" type="Script" id=2]
+[ext_resource path="res://scenes/JumpingFish.gd" type="Script" id=2]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 38.91
 height = 32.18
 
-[node name="FallingFish" type="RigidBody2D"]
+[node name="JumpingFish" type="RigidBody2D"]
+collision_layer = 2
+collision_mask = 2
 contacts_reported = 1
 contact_monitor = true
 script = ExtResource( 2 )
@@ -22,6 +24,6 @@ scale = Vector2( 0.6, 0.6 )
 texture = ExtResource( 1 )
 hframes = 8
 vframes = 16
-frame = 19
+frame = 35
 
-[connection signal="body_entered" from="." to="." method="_on_FallingFish_body_entered"]
+[connection signal="body_entered" from="." to="." method="_on_JumpingFish_body_entered"]
