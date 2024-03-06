@@ -185,3 +185,28 @@ func _process(delta):
 ```
 
 ### PopupFish
+
+### Implementation
+
+`PopUpFish` merupakan _obstacle_ yang berbeda dibandingkan kedua obstacke `Fish` lainnya yang bergerak, `Fish` tipe ini akan muncul dari udara kosong. Untuk melakukannya, diimplementasikan sebuah `AnimationPlayer` yang akan mengatur animasi dari `PopUpFish` mulai dari kemunculan hingga menghilang dari level. Implementasi kode kurang lebih sama, penambahan yang dilakukan terletak di bagian `AnimationPlayer` dan kode untuk pemanggilan animasi yang dibuat tersebut.
+
+Berikut adalah implementasi `AnimationPlayer` yang dibuat.
+
+![pics\animation_player_PopUpFish.png](pics\animation_player_PopUpFish.png "AnimationPlayer PopUpFish")
+
+Sebagai catatan, sebelumnya _scale_ dari `Sprite` di set menjadi (0,0), sehingga tidak terjadi _bug_ aneh yang muncul ketika `PopUpFish` di*spawn*.
+
+Implementasi diatas mengubah beberapa hal sehingga animasi _popup_ dan mekanik game menjadi serealistis mungkin.
+
+**Sprite**:
+
+-   scale: mengubah dari ukuran (0, 0) menjadi (0.6, 0.6) dimana merupakan ukuran default dari setiap _obstacle_ `Fish`
+-   modulate: mengubah warna dasar dari `Sprite` menjadi warna merah, lalu putih, lalu merah, .... secara berganti-gantian sehingga terlihat seperti bahaya.
+
+**CollisionShape2D**:
+
+-   disabled: membuat `CollisionShape2D` supaya tidak mendeteksi `Player` diawal kemunculannya. Diimplementasi karena sangat tidak adil untuk `Player` apabila ia tiba-tiba saja mati sebelum muncul `PopUpFish`.
+
+**`PopUpFish`**:
+
+-   Functions: implementasi untuk menghilangkan `PopUpFish` dari world sehingga tidak menumpuk pada satu level. Diketahui cara mengimplementasikan _function_ di dalam `AnimationPlayer` melalui [video youtube (3:55)](https://www.youtube.com/watch?v=lOAk_b8hitQ).

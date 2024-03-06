@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://scenes/CustomParallaxBackground.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/kenney_platformerpack/PNG/Backgrounds/blue_land.png" type="Texture" id=2]
@@ -8,6 +8,8 @@
 [ext_resource path="res://assets/kenney_platformerpack/PNG/Tiles/water.png" type="Texture" id=6]
 [ext_resource path="res://scenes/Platform.tres" type="TileSet" id=7]
 [ext_resource path="res://scenes/ChangeBackgroundArea.gd" type="Script" id=8]
+[ext_resource path="res://scenes/Spawner.gd" type="Script" id=9]
+[ext_resource path="res://scenes/PopUpFish.tscn" type="PackedScene" id=10]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 18, 1622.5 )
@@ -64,5 +66,26 @@ script = ExtResource( 8 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ChangeBackgroundArea"]
 position = Vector2( -28, 0 )
 shape = SubResource( 1 )
+
+[node name="Spawner2" type="Node2D" parent="."]
+position = Vector2( 5878, 19 )
+script = ExtResource( 9 )
+obstacle = ExtResource( 10 )
+intervalSpawn = 0.2
+minYSpawnRange = -1000
+maxYSpawnRange = 1000
+
+[node name="Spawner" type="Node2D" parent="."]
+position = Vector2( 2939, -1 )
+script = ExtResource( 9 )
+obstacle = ExtResource( 10 )
+intervalSpawn = 0.2
+minXSpawnRange = -3000
+maxXSpawnRange = 3000
+minYSpawnRange = -1000
+maxYSpawnRange = 1000
+
+[node name="PopUpFish" parent="." instance=ExtResource( 10 )]
+position = Vector2( 311, 307 )
 
 [connection signal="body_entered" from="ChangeBackgroundArea" to="ChangeBackgroundArea" method="_on_ChangeBackgroundArea_body_entered"]
