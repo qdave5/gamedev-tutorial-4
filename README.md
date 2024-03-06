@@ -210,3 +210,29 @@ Implementasi diatas mengubah beberapa hal sehingga animasi _popup_ dan mekanik g
 **`PopUpFish`**:
 
 -   Functions: implementasi untuk menghilangkan `PopUpFish` dari world sehingga tidak menumpuk pada satu level. Diketahui cara mengimplementasikan _function_ di dalam `AnimationPlayer` melalui [video youtube (3:55)](https://www.youtube.com/watch?v=lOAk_b8hitQ).
+
+---
+
+## Implementasi RestartButton
+
+Terkadang, cukup menyebalkan bila harus berulang kali menjalankan ulang game setiap kali kalah.
+Maka dari itu, perlu ditambahkan tombol _restart_.
+
+Untuk implementasinya cukup sederhana dikarenakan belum menemukan _source_ yang diinginkan. Hanya digunakan `Button` dan `Label` dalam implementasinya.
+
+Struktur direktori
+
+```
+| RestartButton (Node2D)
+| - Button (Button)
+| - Label (Label dengan text: "Restart")
+```
+
+Pada _node_ `Button` terdapat fungsi `pressed()` yang dapat digunakan untuk mengirimkan sinyal ketika `Button` ditekan oleh pemain. Sehingga implementasi _script_ `RestartButton` akan menjadi sebagai berikut.
+
+```
+func _on_Button_pressed():
+	get_tree().change_scene("res://scenes/Level1.tscn")
+```
+
+`RestartButton` akan membawa pemain kembali ke _scene_ `Level1`
